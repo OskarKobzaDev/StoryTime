@@ -37,18 +37,18 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array<int, string>
      */
-//    protected $hidden = [
-//        'password',
-//        'remember_token',
-//        'two_factor_recovery_codes',
-//        'two_factor_secret',
-//
-//    ];
-    protected $visible = [
-        'id',
-        'name',
+    protected $hidden = [
+        'password',
+        'remember_token',
+        'two_factor_recovery_codes',
+        'two_factor_secret',
 
     ];
+//    protected $visible = [
+//        'id',
+//        'name',
+//
+//    ];
 
     /**
      * The accessors to append to the model's array form.
@@ -80,4 +80,5 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Comment::class);
     }
+
 }

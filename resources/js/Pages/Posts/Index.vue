@@ -4,15 +4,14 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import Container from "@/Components/Container.vue";
 import Pagination from "@/Components/Pagination.vue";
 import {Link} from "@inertiajs/vue3";
-import {formatDistance, parseISO} from "date-fns";
+import {relativeDate} from "@/Utilities/date.js";
 
 defineProps([
     'posts'
 ]);
 
-const foramattedDate = (post)=>{
-    return formatDistance(parseISO(post.created_at), new Date());
-};
+const formattedDate = (post) => relativeDate(post.created_at);
+
 
 </script>
 
@@ -25,12 +24,12 @@ const foramattedDate = (post)=>{
                         <span class="font-bold text-xl block group-hover:text-green-600">
                             {{ post.title }}
                         </span>
-                        <span class="text-sm block pt-1 text-gray-600">{{ foramattedDate(post) }} ago by {{post.user.name}}</span>
+                        <span class="text-sm block pt-1 text-gray-600">{{ formattedDate(post) }} ago by {{post.user.name}}</span>
                     </Link>
                 </li>
             </ul>
 
-            <Pagination :meta="posts.meta"/>
+            <Pagination :meta="posts.meta" :only="['posts']"/>
         </Container>
     </AppLayout>
 </template>
