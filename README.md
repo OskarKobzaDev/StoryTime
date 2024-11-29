@@ -1,4 +1,6 @@
-## About StoryTime
+## About StoryTime:
+StoryTime is my next step in learning Vue as the frontend for a Laravel application.
+
 - Larvel + Vue
 - TDD,
 - Fully contenerized development enviroment
@@ -21,7 +23,7 @@
 - **OR enable hrm(really low perwormance atm): "docker-compose run -p 5173:5173 --rm npm run dev -- --host"**
 - Login:test@example.com Password:11111111
   
-StoryTime is my next step in learning Vue as the frontend for a Laravel application.
+
 
 ## TODO:
 - performace issue with node container(hrm)
