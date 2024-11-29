@@ -23,3 +23,8 @@
   
 StoryTime is my next step in learning Vue as the frontend for a Laravel application.
 
+## TODO:
+- performace issue with node container(hrm)
+- CRUD for comments(2/4)
+- CRUD for posts(0/4)
+- policies

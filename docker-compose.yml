@@ -58,7 +58,7 @@ services:
         networks:
             - dev-net
     npm:
-        image: node:23-alpine3.19
+        image: node:22-alpine
         container_name: npm
         volumes:
             - ./:/var/www/html
