@@ -12,7 +12,11 @@ StoryTime is my next step in learning Vue as the frontend for a Laravel applicat
 
 ## Setup:
 - Clone repo
-- Duplicate .env.example as .env
+- Duplicate .env.example as .env and adjust file permissions as executable
+- Set ownership and permissions for public and storage directories (bash):
+- "chown -R www-data:www-data storage public"
+- "chmod -R 775 /var/www/html/storage"
+- "chmod -R 755 /var/www/html/public"
 - Build containers
 - Run: "docker-compose run --rm composer install"
 - After installing dependencies run: "docker-compose run --rm artisan key:generate"
@@ -21,7 +25,7 @@ StoryTime is my next step in learning Vue as the frontend for a Laravel applicat
 - Next run: "docker-compose run --rm npm install" to install node dependencies
 - Next run "docker-compose run --rm npm run build" to build all assets
 - **OR enable hrm(really low perwormance atm): "docker-compose run -p 5173:5173 --rm npm run dev -- --host"**
-- **It is strongly recommended to use node on host machine for hrm**
+- **It is recommended to place the project in the WSL subsystem optimized for Docker to avoid performance issues with the application when using HRM during development.**
 - Login:test@example.com Password:11111111
   
 
