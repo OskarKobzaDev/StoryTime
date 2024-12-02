@@ -27,11 +27,11 @@ StoryTime is my next step in learning Vue as the frontend for a Laravel applicat
 - **OR enable hrm(really low perwormance atm): "docker-compose run -p 5173:5173 --rm npm run dev -- --host"**
 - **It is recommended to place the project in the WSL subsystem optimized for Docker to avoid performance issues with the application when using HRM during development.**
 - Login:test@example.com Password:11111111
+- **For testing make sure to have php interpreter installed on your VM and set it as remote interpreter in IDE**
   
 
 
 ## TODO:
-- performace issue with node container(hrm)
 - CRUD for comments(2/4)
 - CRUD for posts(0/4)
 - policies
