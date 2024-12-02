@@ -17,3 +17,14 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip opcache
 
 RUN pecl install redis && docker-php-ext-enable redis
+
+WORKDIR /var/www/html
+
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+USER www-data
+
+EXPOSE 9000
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["php-fpm"]
