@@ -57,9 +57,6 @@ class CommentController extends BaseController
      */
     public function destroy(Request $request, Comment $comment)
     {
-
-
-
         $comment->delete();
 
         return to_route('posts.show', ['post'=> $comment->post_id, 'page'=> $request->query('page')])
