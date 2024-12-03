@@ -26,12 +26,19 @@ class DatabaseSeeder extends Seeder
         $comments = Comment::factory(150)->recycle($users)->recycle($posts)->create();
 
         $test = User::factory()
-            ->has(Post::factory(2)->has(Comment::factory(7)->recycle($users)))
+            ->has(Post::factory(2)->has(Comment::factory(50)->recycle($users)))
             ->has(Comment::factory(120)->recycle($posts))
             ->create([
             'name' => 'Oskar Kobza',
             'email' => 'test@example.com',
             'password' => '11111111',
         ]);
+        $user = User::find(11);
+        Post::factory(2)
+            ->for($user)
+            ->create()
+            ->each(function ($post) use ($user) {
+                Comment::factory(50)->for($post)->for($user)->create();
+            });
     }
 }
