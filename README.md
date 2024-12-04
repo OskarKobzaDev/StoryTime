@@ -42,3 +42,4 @@ designed simple forum with async elements. During development process I focused 
 - CRUD for comments(4/4)
 - CRUD for posts(1/4)
 - policies(1/2)
+- **For testing make sure to have php interpreter installed on your VM and set it as remote interpreter in IDE**
