@@ -6,10 +6,21 @@ use App\Http\Resources\CommentResource;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 
-class PostController extends Controller
+class PostController extends BaseController
 {
+    use AuthorizesRequests;
+    /**
+     * Display a listing of the resource.
+     */
+    public function __construct(){
+        $this->authorizeResource(Post::class);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -44,14 +55,19 @@ class PostController extends Controller
             'user_id' => $request->user()->id,
         ]);
 
-        return to_route('posts.show', $post);
+        return redirect($post->showRoute());
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
+    public function show(Request $request, Post $post)
     {
+        // posts/{post}/{slug}?page=1
+        if(! Str::contains($post->showRoute(), $request->path()) ){
+            return redirect($post->showRoute($request->query()), status: 301);
+        }
+
         $post->load('user');
 
         return inertia('Posts/Show', [

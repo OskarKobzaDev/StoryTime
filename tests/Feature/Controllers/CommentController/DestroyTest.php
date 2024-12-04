@@ -19,13 +19,12 @@ it('can delete a comment', function () {
 
     $this->assertModelMissing($comment);
 });
-it('redirects user to post show page', function () {
+it('redirects to the post show page', function () {
     $comment = Comment::factory()->create();
 
     actingAs($comment->user)
         ->delete(route('comments.destroy', $comment))
-        ->assertRedirect(route('posts.show', $comment->post));
-
+        ->assertRedirect($comment->post->showRoute());
 });
 it('prevents deleting comment you didn\'t create',function(){
     $comment = Comment::factory()->create();
@@ -50,6 +49,6 @@ it('redirects user to post show page with page query parameter', function () {
 
     actingAs($comment->user)
         ->delete(route('comments.destroy', ['comment' => $comment, 'page' => 2]))
-        ->assertRedirect(route('posts.show', ['post' => $comment->post_id, 'page' => 2]));
+        ->assertRedirect($comment->post->showRoute(['page' => 2]));
 
 });
