@@ -15,6 +15,7 @@ import InputError from "@/Components/InputError.vue";
 import {comment} from "postcss";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import {useConfirm} from "@/Utilities/Composables/useConfirm.js";
+import MarkdownEditor from "@/Components/MarkdownEditor.vue";
 
 const props = defineProps(['post','comments']);
 const commentIdBeingEdited = ref(null);
@@ -82,8 +83,7 @@ const cancelEditComment = () =>{
 
             <span class="text-sm block mt-1 text-gray-600">{{ foramattedDate }} ago by {{post.user.name}}</span>
 
-            <article class="mt-6">
-                <pre class="whitespace-pre-wrap font-sans ">{{ post.body }}</pre>
+            <article class="mt-6 prose prose-sm max-w-none" v-html="post.html">
             </article>
 
             <div class="mt-2">
@@ -92,7 +92,7 @@ const cancelEditComment = () =>{
                 <form v-if="$page.props.auth.user" @submit.prevent="() => commentIdBeingEdited ? updateComment() : addComment()" class="mt-10">
                     <div>
                         <InputLabel for="body" class="sr-only">Comment</InputLabel>
-                        <TextArea ref="commentTextAreaRef" id="body" v-model="commentForm.body" rows="4" placeholder="Speak your mind Spock..."/>
+                        <MarkdownEditor ref="commentTextAreaRef" id="body" v-model="commentForm.body" placeholder="Speak your mind Spock..." editorClass="min-h-[160px]"/>
                         <InputError :message="commentForm.errors.body" class="mt-1"/>
                     </div>
 

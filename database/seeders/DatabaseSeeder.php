@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $users = User::factory(10)->create();
 
         $posts = Post::factory(200)
+            ->withFixture()
             ->has(Comment::factory(15)->recycle($users))
             ->recycle($users)
             ->create();
@@ -26,7 +27,7 @@ class DatabaseSeeder extends Seeder
         $comments = Comment::factory(150)->recycle($users)->recycle($posts)->create();
 
         $test = User::factory()
-            ->has(Post::factory(2)->has(Comment::factory(50)->recycle($users)))
+            ->has(Post::factory(2)->withFixture()->has(Comment::factory(50)->recycle($users)))
             ->has(Comment::factory(120)->recycle($posts))
             ->create([
             'name' => 'Oskar Kobza',
@@ -35,6 +36,7 @@ class DatabaseSeeder extends Seeder
         ]);
         $user = User::find(11);
         Post::factory(2)
+            ->withFixture()
             ->for($user)
             ->create()
             ->each(function ($post) use ($user) {

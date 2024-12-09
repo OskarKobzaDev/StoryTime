@@ -9,7 +9,8 @@ import TextInput from "@/Components/TextInput.vue";
 import InputError from "@/Components/InputError.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import Container from "@/Components/Container.vue";
-import TextArea from "@/Components/TextArea.vue";
+import MarkdownEditor from "@/Components/MarkdownEditor.vue";
+import {isInProduction} from "@/Utilities/environment.js";
 
 const form = useForm({
     title: '',
@@ -19,6 +20,18 @@ const form = useForm({
 const createPost = () => {
     form.post(route('posts.store'));
 };
+
+
+const autofill = async () => {
+    if (isInProduction()){
+        return;
+    }
+    const response = await axios.get('/local/post-content');
+
+    form.title = response.data.title;
+    form.body = response.data.body;
+}
+
 </script>
 
 <template>
@@ -34,7 +47,17 @@ const createPost = () => {
                 </div>
                 <div>
                     <InputLabel for="body">Body</InputLabel>
-                    <TextArea rows="25" id="body" class="w-full" v-model="form.body" placeholder="Give it a great body..." />
+                    <MarkdownEditor v-model="form.body" >
+                        <template #toolbar="{ editor }">
+                            <li v-if="! isInProduction()">
+                                <button @click="autofill"
+                                        title="Autofill" type="button"
+                                        class="px-3 py-2">
+                                    <i class="ri-article-line"></i>
+                                </button>
+                            </li>
+                        </template>
+                    </MarkdownEditor>
                     <InputError :message="form.errors.body" class="mt-1"/>
                 </div>
                 <div class="mt-4 flex justify-between">
