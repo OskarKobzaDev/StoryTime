@@ -16,6 +16,8 @@ designed simple forum with async elements. During development process I focused 
 - Using JS Promises for modal control
 - Passing policy logic via resource API to the frontend
 - Responsive Design
+- Using slug for posts(SEO)
+- Customizable WYSIWYG editor
 
 ## Setup:
 - Clone repo

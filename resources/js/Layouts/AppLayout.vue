@@ -18,12 +18,18 @@ const menu = [
         name: "Dashboard",
         url: route('dashboard'),
         route: 'dashboard',
-        when: () => usePage().props.auth.user
+        when: () => usePage().props.auth.user,
     },
     {
         name: "Posts",
         url: route('posts.index'),
         route: 'posts.index',
+    },
+    {
+        name: "Create a Post",
+        url: route('posts.create'),
+        route: 'posts.create',
+        when: () => usePage().props.permissions.create_posts,
     }
 ];
 
@@ -65,7 +71,7 @@ const logout = () => {
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <template v-for="item in menu" :key="item.name">
                                     <NavLink
-                                        v-if="item.when ? item.when : true"
+                                        v-if="item.when ? item.when() : true"
                                         :href="item.url"
                                         :active="route().current(item.route)">
                                         {{item.name}}

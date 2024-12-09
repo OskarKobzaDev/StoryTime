@@ -29,7 +29,7 @@ it('redirects user to the post show page', function () {
         ->post(route('posts.comments.store',$post), [
             'body' => 'This is a comment',
         ])
-        ->assertRedirect(route('posts.show',$post));
+        ->assertRedirect($post->showRoute());
 });
 
 it('validates comment to have specific body', function ($value) {

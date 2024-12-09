@@ -6,7 +6,6 @@ use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Routing\Controller as BaseController;
 
 class CommentController extends BaseController
@@ -32,7 +31,7 @@ class CommentController extends BaseController
             ->post()->associate($post)
             ->save();
 
-        return to_route('posts.show', $post)
+        return redirect($post->showRoute())
             ->banner('Your comment has been posted.');
     }
 
@@ -48,7 +47,7 @@ class CommentController extends BaseController
 
         $comment->update($data);
 
-        return to_route('posts.show',['post'=> $comment->post_id, 'page'=> $request->query('page')])
+        return redirect($comment->post->showRoute(['page'=> $request->query('page')]))
             ->banner('Your comment has been updated.');
     }
 
@@ -59,7 +58,7 @@ class CommentController extends BaseController
     {
         $comment->delete();
 
-        return to_route('posts.show', ['post'=> $comment->post_id, 'page'=> $request->query('page')])
+        return redirect($comment->post->showRoute(['page'=> $request->query('page')]))
             ->banner('Your comment has been deleted.');
     }
 }
