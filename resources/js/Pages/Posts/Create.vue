@@ -11,9 +11,13 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import Container from "@/Components/Container.vue";
 import MarkdownEditor from "@/Components/MarkdownEditor.vue";
 import {isInProduction} from "@/Utilities/environment.js";
+import PageHeading from "@/Components/PageHeading.vue";
+
+const props = defineProps(['topics']);
 
 const form = useForm({
     title: '',
+    topic_id: props.topics[0].id,
     body: '',
 })
 
@@ -37,13 +41,22 @@ const autofill = async () => {
 <template>
     <AppLayout>
         <Container >
-            <h1 class="text-2xl font-bold">Create a Post</h1>
+            <PageHeading>Create a Post</PageHeading>
 
             <form @submit.prevent="createPost">
                 <div>
                     <InputLabel for="title">Title</InputLabel>
                     <TextInput id="title" class="w-full" v-model="form.title" placeholder="Give it a great title..." />
                     <InputError :message="form.errors.title" class="mt-1"/>
+                </div>
+                <div>
+                    <InputLabel for="topic_id">Select a Topic</InputLabel>
+                    <select v-model="form.topic_id" id="topic_id" class="mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                        <option v-for="topic in topics" :key="topic.id" :value="topic.id">
+                            {{ topic.name }}
+                        </option>
+                    </select>
+                    <InputError :message="form.errors.topic_id" class="mt-1"/>
                 </div>
                 <div>
                     <InputLabel for="body">Body</InputLabel>

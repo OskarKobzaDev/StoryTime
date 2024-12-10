@@ -7,15 +7,14 @@ import Pagination from "@/Components/Pagination.vue";
 import {relativeDate} from "@/Utilities/date.js";
 import Comment from "@/Components/Comment.vue";
 import InputLabel from "@/Components/InputLabel.vue";
-import TextInput from "@/Components/TextInput.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import {router, useForm} from "@inertiajs/vue3";
-import TextArea from "@/Components/TextArea.vue";
+import {router, useForm, Head} from "@inertiajs/vue3";
 import InputError from "@/Components/InputError.vue";
-import {comment} from "postcss";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import {useConfirm} from "@/Utilities/Composables/useConfirm.js";
 import MarkdownEditor from "@/Components/MarkdownEditor.vue";
+import PageHeading from "@/Components/PageHeading.vue";
+import Pill from "@/Components/Pill.vue";
 
 const props = defineProps(['post','comments']);
 const commentIdBeingEdited = ref(null);
@@ -59,7 +58,12 @@ const deleteComment = async (commentId) => {
         return;
     }
 
-    router.delete(route('comments.destroy', { comment: commentId, page: props.comments.meta.current_page}),{
+    router.delete(route('comments.destroy', {
+        comment: commentId,
+        page: props.comments.data.length > 1
+        ? props.comments.meta.current_page
+        : Math.max(props.comments.meta.current_page - 1, 1)
+    }),{
         preserveScroll: true,
     });
 };
@@ -77,11 +81,15 @@ const cancelEditComment = () =>{
 </script>
 
 <template>
+    <Head>
+        <link rel="canonical" :href="post.routes.show"/>
+    </Head>
     <AppLayout :title="post.title">
         <Container>
-            <h1 class="text-2xl font-bold">{{post.title}}</h1>
+            <Pill :href="route('posts.index', {topic: post.topic.slug})">{{ post.topic.name }}</Pill>
+            <PageHeading class="mt-2">{{post.title}}</PageHeading>
 
-            <span class="text-sm block mt-1 text-gray-600">{{ foramattedDate }} ago by {{post.user.name}}</span>
+            <span class="text-sm block mt-1 text-gray-600">{{ foramattedDate }} by {{post.user.name}}</span>
 
             <article class="mt-6 prose prose-sm max-w-none" v-html="post.html">
             </article>
@@ -92,7 +100,7 @@ const cancelEditComment = () =>{
                 <form v-if="$page.props.auth.user" @submit.prevent="() => commentIdBeingEdited ? updateComment() : addComment()" class="mt-10">
                     <div>
                         <InputLabel for="body" class="sr-only">Comment</InputLabel>
-                        <MarkdownEditor ref="commentTextAreaRef" id="body" v-model="commentForm.body" placeholder="Speak your mind Spock..." editorClass="min-h-[160px]"/>
+                        <MarkdownEditor ref="commentTextAreaRef" id="body" v-model="commentForm.body" placeholder="Speak your mind Spock..." editorClass="!min-h-[160px]"/>
                         <InputError :message="commentForm.errors.body" class="mt-1"/>
                     </div>
 

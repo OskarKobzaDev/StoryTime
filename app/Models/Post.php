@@ -27,6 +27,7 @@ class Post extends Model
     protected $fillable = [
         'body',
         'title',
+        'topic_id',
         'user_id',
         'html'
     ];
@@ -34,6 +35,10 @@ class Post extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+    public function topic(): BelongsTo
+    {
+        return $this->belongsTo(Topic::class);
     }
     public function comments(): HasMany
     {
