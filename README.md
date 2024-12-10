@@ -39,8 +39,10 @@ designed simple forum with async elements. During development process I focused 
 
 ## TODO:
 - performance issue with node hrm container(1/1)
-- Tests for controllers(1/2)
+- Tests for controllers(2/2)
 - CRUD for comments(4/4)
-- CRUD for posts(1/4)
-- policies(1/2)
+- CRUD for posts(4/4)
+- policies(2/2)
+- Likes support(0/1)
+- SSR(0/1)
 - **For testing make sure to have php interpreter installed on your VM and set it as remote interpreter in IDE**
