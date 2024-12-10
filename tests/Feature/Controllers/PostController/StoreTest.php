@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Post;
+use App\Models\Topic;
 use App\Models\User;
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\post;
@@ -14,6 +15,9 @@ dataset(name: 'invalid_post_data', dataset: [
     [[ 'title' =>  str_repeat('a', 9) ], 'title'],
     [[ 'title' =>  str_repeat('a', 121) ], 'title'],
 
+    [['topic_id'=>null],'topic_id'],
+    [['topic_id'=>-1],'topic_id'],
+
     [[ 'body' =>  null ], 'body'],
     [[ 'body' =>  1 ], 'body'],
     [[ 'body' =>  2.5 ], 'body'],
@@ -24,9 +28,10 @@ dataset(name: 'invalid_post_data', dataset: [
 ]);
 
 beforeEach(function () {
-   $this->validData=[
+   $this->validData= fn() => [
        'title' => 'Hello World',
-       'body' => str_repeat('a', 100)
+       'topic_id' => Topic::factory()->create()->getKey(),
+       'body' => str_repeat('a', 150)
    ];
 });
 
@@ -38,25 +43,27 @@ it('requires authentication', function (): void {
 it('stores a post', function () {
     $user = User::factory()->create();
 
+    $data = value($this->validData);
+
     actingAs($user)
-        ->post(route('posts.store'), $this->validData);
+        ->post(route('posts.store'), $data);
 
     $this->assertDatabaseHas(Post::class, [
-        ...$this->validData,
+        ...$data,
         'user_id' => $user->id,
     ]);
 });
 
 it('redirects user to post show page', function () {
     $user = User::factory()->create();
-
+    $data = value($this->validData);
     actingAs($user)
-        ->post(route('posts.store'), $this->validData)
+        ->post(route('posts.store'), $data)
         ->assertRedirect(Post::latest('id')->first()->showRoute());
 });
 
 it('should require valid data', function (array $badData, array|string $errors ) {
-    actingAs(User::factory()->create())->post(route('posts.store'), [Post::latest('id')->first(), ...$badData ] )
+    actingAs(User::factory()->create())->post(route('posts.store'), [...value($this->validData), ...$badData ] )
         ->assertInvalid($errors);
 })->with('invalid_post_data');
 

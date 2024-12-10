@@ -14,7 +14,7 @@ it('can show a post', function () {
 });
 it('passes post to the view', function () {
     $post = Post::factory()->create();
-    $post->load('user');
+    $post->load('user', 'topic');
 
     get($post->showRoute())
         ->assertHasResource('post', PostResource::make($post));
@@ -30,9 +30,13 @@ it('passes comments to the view', function () {
         ->assertHasPaginatedResource('comments', CommentResource::collection($comments->reverse()));
 });
 
-it('will redirect if the slug is incorrect', function () {
+it('will redirect if the slug is incorrect', function (string $incorrectSlug) {
     $post = Post::factory()->create(['title'=>'hello-world']);
 
-    get(route('posts.show', [$post, 'foo-bar','page'=>2]))
+    get(route('posts.show', [$post, $incorrectSlug,'page'=>2]))
         ->assertRedirect($post->showRoute(['page' => 2]));
-});
+})->with([
+    'foo-bar',
+    'hello'
+]);
+
