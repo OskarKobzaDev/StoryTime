@@ -18,6 +18,7 @@ designed simple forum with async elements. During development process I focused 
 - Responsive Design
 - Using slug for posts(SEO)
 - Customizable WYSIWYG editor
+- Denormalized database for likes optimization
 
 ## Setup:
 - Clone repo
@@ -43,6 +44,7 @@ designed simple forum with async elements. During development process I focused 
 - CRUD for comments(4/4)
 - CRUD for posts(4/4)
 - policies(2/2)
-- Likes support(0/1)
+- Likes support(1/1)
+- Search support(1/1)
 - SSR(0/1)
 - **For testing make sure to have php interpreter installed on your VM and set it as remote interpreter in IDE**
