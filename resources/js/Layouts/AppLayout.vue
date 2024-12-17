@@ -15,12 +15,6 @@ defineProps({
 
 const menu = [
     {
-        name: "Dashboard",
-        url: route('dashboard'),
-        route: 'dashboard',
-        when: () => usePage().props.auth.user,
-    },
-    {
         name: "Posts",
         url: route('posts.index'),
         route: 'posts.index',
@@ -62,7 +56,7 @@ const logout = () => {
                         <div class="flex">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
-                                <Link :href="route('dashboard')">
+                                <Link :href="route('posts.index')">
                                     <ApplicationMark class="block h-9 w-auto" />
                                 </Link>
                             </div>
@@ -222,8 +216,8 @@ const logout = () => {
                 <!-- Responsive Navigation Menu -->
                 <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                            Dashboard
+                        <ResponsiveNavLink :href="route('posts.index')" :active="route().current('posts.index')">
+                            Posts
                         </ResponsiveNavLink>
                     </div>
 

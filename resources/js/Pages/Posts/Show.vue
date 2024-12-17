@@ -16,6 +16,7 @@ import MarkdownEditor from "@/Components/MarkdownEditor.vue";
 import PageHeading from "@/Components/PageHeading.vue";
 import Pill from "@/Components/Pill.vue";
 import {HandThumbUpIcon, HandThumbDownIcon} from "@heroicons/vue/20/solid/index.js";
+import DangerButton from "@/Components/DangerButton.vue";
 
 const props = defineProps(['post','comments']);
 const commentIdBeingEdited = ref(null);
@@ -67,6 +68,8 @@ const deleteComment = async (commentId) => {
     }),{
         preserveScroll: true,
     });
+
+    cancelEditComment();
 };
 
 const editComment = (commentId) => {
@@ -79,6 +82,20 @@ const cancelEditComment = () =>{
     commentIdBeingEdited.value = null;
     commentForm.reset();
 };
+
+const deletePost = async () => {
+    if(! await confirmation('Are you sure you want to delete this comment? All comunity comments will be lost.')){
+        return;
+    }
+
+    router.delete(route('posts.delete',{
+        post: props.post.id
+    }));
+};
+
+const editPost = () => {
+    alert('edit')
+};
 </script>
 
 <template>
@@ -88,7 +105,21 @@ const cancelEditComment = () =>{
     <AppLayout :title="post.title">
         <Container>
             <Pill :href="route('posts.index', {topic: post.topic.slug})">{{ post.topic.name }}</Pill>
-            <PageHeading class="mt-2">{{post.title}}</PageHeading>
+            <div class="flex justify-between">
+                <PageHeading class="mt-2">{{post.title}}</PageHeading>
+                <div class="space-x-2">
+                    <Link v-if="post.can.delete"
+                          :href="route('posts.delete',{ post:post.id })"
+                          method="delete"
+                          class="bg-red-500 px-2 py-3 rounded-md text-white hover:bg-red-600"
+                    >Delete Post</Link>
+                    <Link v-if="post.can.update"
+                          :href="route('posts.edit',{ post:post.id })"
+                          class="bg-indigo-500 px-2 py-3 rounded-md text-white hover:bg-indigo-600"
+                    >Edit Post</Link>
+                </div>
+            </div>
+
 
             <span class="text-sm block mt-1 text-gray-600">{{ foramattedDate }} by {{post.user.name}}</span>
 

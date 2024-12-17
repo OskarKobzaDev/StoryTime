@@ -12,19 +12,32 @@ import Container from "@/Components/Container.vue";
 import MarkdownEditor from "@/Components/MarkdownEditor.vue";
 import {isInProduction} from "@/Utilities/environment.js";
 import PageHeading from "@/Components/PageHeading.vue";
+import {computed} from "vue";
 
-const props = defineProps(['topics']);
+const props = defineProps({
+    topics: {
+        type: Array,
+        required: true,
+    },
+    post: {
+        type: Object,
+        default: null,
+    },
+});
 
 const form = useForm({
-    title: '',
+    title: props.post ? props.post.title : '',
     topic_id: props.topics[0].id,
-    body: '',
+    body: props.post ? props.post.body : '',
 })
 
-const createPost = () => {
-    form.post(route('posts.store'));
+const submitForm = () => {
+    if(props.post){
+        form.put(route('posts.update', props.post.id));
+    }else{
+        form.post(route('posts.store'));
+    }
 };
-
 
 const autofill = async () => {
     if (isInProduction()){
@@ -35,15 +48,21 @@ const autofill = async () => {
     form.title = response.data.title;
     form.body = response.data.body;
 }
+const pageTitle = computed(() => {
+    return editOrCreate ? 'Edit' : 'Create';
+});
+const editOrCreate = computed(()=>{
+    return Boolean(props.post && props.post.title);
+})
 
 </script>
 
 <template>
     <AppLayout>
         <Container >
-            <PageHeading>Create a Post</PageHeading>
+            <PageHeading>{{ pageTitle }} Post</PageHeading>
 
-            <form @submit.prevent="createPost">
+            <form @submit.prevent="submitForm">
                 <div>
                     <InputLabel for="title">Title</InputLabel>
                     <TextInput id="title" class="w-full" v-model="form.title" placeholder="Give it a great title..." />
@@ -75,7 +94,7 @@ const autofill = async () => {
                 </div>
                 <div class="mt-4 flex justify-between">
                     <SecondaryButton @click="cancelCreate">Cancel</SecondaryButton>
-                    <PrimaryButton type="submit">Create Post</PrimaryButton>
+                    <PrimaryButton type="submit">{{editOrCreate ? 'Save' : 'Create Post'}}</PrimaryButton>
                 </div>
             </form>
 

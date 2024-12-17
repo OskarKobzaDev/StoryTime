@@ -44,7 +44,7 @@ const emit = defineEmits(['delete','update'])
                     <Link v-else preserve-scroll :href="route('likes.destroy', ['comment', comment.id])"
                           method="delete"
                           class="items-center h-10 flex inline-block text-gray-700 hover:text-pink-500 transition-colors
-                                rounded-full">
+                                rounded-full mr-3">
                         <HandThumbDownIcon class="size-4"/>
                     </Link>
                 </div>
