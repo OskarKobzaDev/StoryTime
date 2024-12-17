@@ -46,5 +46,4 @@ designed simple forum with async elements. During development process I focused 
 - policies(2/2)
 - Likes support(1/1)
 - Search support(1/1)
-- SSR(0/1)
 - **For testing make sure to have php interpreter installed on your VM and set it as remote interpreter in IDE**

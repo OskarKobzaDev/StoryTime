@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Models\Like;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -30,6 +31,8 @@ class PostResource extends JsonResource
             ],
             'can'=>[
                 'like' => $this->when($this->withLikePermission, fn() => $request->user()?->can('create', [Like::class, $this->resource])),
+                'delete' => $request->user()?->can('delete',$this->resource),
+                'update' => $request->user()?->can('update',$this->resource),
             ],
         ];
     }

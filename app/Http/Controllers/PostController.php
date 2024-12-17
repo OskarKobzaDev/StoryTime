@@ -106,7 +106,10 @@ class PostController extends BaseController
      */
     public function edit(Post $post)
     {
-        //
+        return inertia('Posts/Create',[
+            'topics' => fn () => TopicResource::collection(Topic::all()),
+            'post' => fn () => $post,
+    ]);
     }
 
     /**
@@ -114,7 +117,17 @@ class PostController extends BaseController
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $data = $request->validate([
+            'title' => ['required','string','min:10','max:120'],
+            'topic_id' => ['required','exists:topics,id'],
+            'body' => ['required', 'string','min:100','max:5000'],
+        ]);
+        $prevData = $post->only(array_keys($data));
+        $diff = array_diff_assoc($data, $prevData);
+        if (!empty($diff)) {
+            $post->update($diff);
+        }
+        return redirect($post->showRoute());
     }
 
     /**
@@ -122,6 +135,8 @@ class PostController extends BaseController
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+
+        return redirect(route('posts.index'));
     }
 }

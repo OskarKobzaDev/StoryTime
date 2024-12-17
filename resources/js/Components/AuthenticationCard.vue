@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
+    <div class="min-h-screen overflow-y-hidden flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gradient-to-br from-green-200 to-slate-200">
         <div>
             <slot name="logo" />
         </div>

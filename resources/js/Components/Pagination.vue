@@ -55,8 +55,8 @@ const nextUrl = computed(()=>[...props.meta.links].reverse()[0].url);
                         :href="link.url"
                          :only="only"
                         class="relative inline-flex items-center first-of-type:rounded-l-md last-of-type:rounded-l-md px-3 py-2 text-gray-400 focus:z-20 "
-                        :class="{'z-10 bg-indigo-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600': link.active,
-                                'text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-100 focus:outline-offset-0': !link.active
+                        :class="{'z-10 bg-green-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600': link.active,
+                                'text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-200 focus:outline-offset-0': !link.active
                         }"
                         v-html="link.label"
                     >
