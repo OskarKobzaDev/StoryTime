@@ -36,7 +36,7 @@ class LikeController extends Controller
         $likeable->likes()->whereBelongsTo($request->user())->delete();
 
         $likeable->decrement('likes_count');
-
+        //dd($likeable->likes_count);
         return back();
     }
 

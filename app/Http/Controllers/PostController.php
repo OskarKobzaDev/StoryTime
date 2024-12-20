@@ -88,7 +88,7 @@ class PostController extends BaseController
             return redirect($post->showRoute($request->query()), status: 301);
         }
 
-        $post->load('user','topic');
+        $post->load('user','topic','likes');
 
         return inertia('Posts/Show', array(
             'post' => fn () => PostResource::make($post)->withLikePermission(),

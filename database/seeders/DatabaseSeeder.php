@@ -42,6 +42,15 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
             'password' => '11111111',
         ]);
+        $test->posts()->each(function (Post $post) {
+            $likesCount = $post->likes()->count();
+            $post->update(['likes_count' => $likesCount]);
+        });
+        $posts->each(function (Post $post) {
+            $likesCount = $post->likes()->count();
+            $post->update(['likes_count' => $likesCount]);
+        });
+
         $user = User::find(11);
         Post::factory(2)
             ->withFixture()
@@ -50,6 +59,8 @@ class DatabaseSeeder extends Seeder
             ->create()
             ->each(function ($post) use ($user) {
                 Comment::factory(50)->for($post)->for($user)->create();
+                $likesCount = $post->likes()->count();
+                $post->update(['likes_count' => $likesCount]);
             });
     }
 }

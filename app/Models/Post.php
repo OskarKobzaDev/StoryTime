@@ -18,8 +18,6 @@ class Post extends Model
     use HasFactory;
     use ConvertsMarkdownToHtml;
     use Searchable;
-
-
     protected static function booted(): void{
         static::saving(fn (Post $model) => $model->fill(['html' => str($model->body)->markdown([
             'html_input' => 'strip',

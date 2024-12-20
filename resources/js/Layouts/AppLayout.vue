@@ -24,7 +24,7 @@ const menu = [
         url: route('posts.create'),
         route: 'posts.create',
         when: () => usePage().props.permissions.create_posts,
-    }
+    },
 ];
 
 const showingNavigationDropdown = ref(false);
@@ -70,7 +70,11 @@ const logout = () => {
                                         :active="route().current(item.route)">
                                         {{item.name}}
                                     </NavLink>
+
                                 </template>
+                                <a href="https://oskarkobza.pl" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+                                    Back to resume
+                                </a>
                             </div>
                         </div>
 
@@ -216,8 +220,19 @@ const logout = () => {
                 <!-- Responsive Navigation Menu -->
                 <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink :href="route('posts.index')" :active="route().current('posts.index')">
-                            Posts
+                        <template v-for="item in menu" :key="item.name">
+                            <ResponsiveNavLink
+                                v-if="item.when ? item.when() : true"
+                                :href="item.url"
+                                :active="route().current(item.route)">
+                                {{item.name}}
+                            </ResponsiveNavLink>
+                        </template>
+                        <a href="https://oskarkobza.pl" class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out">
+                            Back to resume
+                        </a>
+                        <ResponsiveNavLink v-if="! $page.props.auth.user" :href="route('login')">
+                            Login
                         </ResponsiveNavLink>
                     </div>
 
