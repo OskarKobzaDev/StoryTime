@@ -1,7 +1,7 @@
 <script setup>
 
 
-import {useForm} from "@inertiajs/vue3";
+import {router, useForm} from "@inertiajs/vue3";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import InputLabel from "@/Components/InputLabel.vue";
@@ -38,7 +38,9 @@ const submitForm = () => {
         form.post(route('posts.store'));
     }
 };
-
+const cancelCreate = () =>{
+    history.back();
+};
 const autofill = async () => {
     if (isInProduction()){
         return;

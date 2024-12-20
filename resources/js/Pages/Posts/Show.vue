@@ -107,15 +107,15 @@ const editPost = () => {
             <Pill :href="route('posts.index', {topic: post.topic.slug})">{{ post.topic.name }}</Pill>
             <div class="flex justify-between">
                 <PageHeading class="mt-2">{{post.title}}</PageHeading>
-                <div class="space-x-2">
-                    <Link v-if="post.can.delete"
-                          :href="route('posts.delete',{ post:post.id })"
-                          method="delete"
-                          class="bg-red-500 px-2 py-3 rounded-md text-white hover:bg-red-600"
-                    >Delete Post</Link>
+                <div class="flex flex-col space-y-1 text-xs md:text-base text-center">
+                    <button
+                        v-if="post.can.delete"
+                        @click="deletePost()"
+                        class="bg-red-500 px-2 py-2 min-w-20 rounded-md text-white hover:bg-red-600"
+                    >Delete Post</button>
                     <Link v-if="post.can.update"
                           :href="route('posts.edit',{ post:post.id })"
-                          class="bg-indigo-500 px-2 py-3 rounded-md text-white hover:bg-indigo-600"
+                          class="bg-indigo-500 px-2 py-2  min-w-20 rounded-md text-white hover:bg-indigo-600"
                     >Edit Post</Link>
                 </div>
             </div>

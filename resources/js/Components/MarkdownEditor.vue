@@ -67,13 +67,13 @@ const promptUserForHref = () =>{
 </script>
 
 <template>
-    <div v-if="editor" class="bg-white rounded-md border-0  shadow-sm ring-1
+    <div v-if="editor" class="bg-white rounded-md border-0 shadow-sm ring-1
         ring-inset ring-gray-300 focus:ring-2 focus:ring-green-600 sm:text-sm sm:leading-6">
-        <menu class="flex divide-x-2 border-b">
+        <menu class="flex border-b flex-wrap">
             <li>
                 <button @click="()=> editor.chain().focus().toggleBold().run()"
                         title="Bold" type="button"
-                        class="px-3 py-2 rounded-tl-md"
+                        class="px-3 py-2 rounded-tl-md min-w-12 border-r border-b"
                         :class="[ editor.isActive('bold') ? 'bg-green-500 text-white' : 'hover:bg-green-200 ']">
                     <i class="ri-bold"></i>
                 </button>
@@ -81,7 +81,7 @@ const promptUserForHref = () =>{
             <li>
                 <button @click="()=> editor.chain().focus().toggleItalic().run()"
                         title="Italic" type="button"
-                        class="px-3 py-2"
+                        class="px-3 py-2 min-w-12 border-r border-b"
                         :class="[ editor.isActive('italic') ? 'bg-green-500 text-white' : 'hover:bg-green-200 ']">
                     <i class="ri-italic"></i>
                 </button>
@@ -89,7 +89,7 @@ const promptUserForHref = () =>{
             <li>
                 <button @click="()=> editor.chain().focus().toggleStrike().run()"
                         title="Strikethrough" type="button"
-                        class="px-3 py-2"
+                        class="px-3 py-2 min-w-12 border-r border-b"
                         :class="[ editor.isActive('strike') ? 'bg-green-500 text-white' : 'hover:bg-green-200 ']">
                     <i class="ri-strikethrough"></i>
                 </button>
@@ -97,7 +97,7 @@ const promptUserForHref = () =>{
             <li>
                 <button @click="()=> editor.chain().focus().toggleBlockquote().run()"
                         title="Blockquote" type="button"
-                        class="px-3 py-2"
+                        class="px-3 py-2 min-w-12 border-r border-b"
                         :class="[ editor.isActive('blockquote') ? 'bg-green-500 text-white' : 'hover:bg-green-200 ']">
                     <i class="ri-double-quotes-l"></i>
                 </button>
@@ -105,7 +105,7 @@ const promptUserForHref = () =>{
             <li>
                 <button @click="()=> editor.chain().focus().toggleBulletList().run()"
                         title="Bullet List" type="button"
-                        class="px-3 py-2"
+                        class="px-3 py-2 min-w-12 border-r border-b"
                         :class="[ editor.isActive('bulletList') ? 'bg-green-500 text-white' : 'hover:bg-green-200 ']">
                     <i class="ri-list-unordered"></i>
                 </button>
@@ -113,7 +113,7 @@ const promptUserForHref = () =>{
             <li>
                 <button @click="()=> editor.chain().focus().toggleOrderedList().run()"
                         title="Numeric List" type="button"
-                        class="px-3 py-2"
+                        class="px-3 py-2 min-w-12 border-r border-b"
                         :class="[ editor.isActive('orderedList') ? 'bg-green-500 text-white' : 'hover:bg-green-200 ']">
                     <i class="ri-list-ordered"></i>
                 </button>
@@ -121,7 +121,7 @@ const promptUserForHref = () =>{
             <li>
                 <button @click="promptUserForHref"
                         title="Add link" type="button"
-                        class="px-3 py-2"
+                        class="px-3 py-2 min-w-12 border-r border-b"
                         :class="[ editor.isActive('link') ? 'bg-green-500 text-white' : 'hover:bg-green-200 ']">
                     <i class="ri-link"></i>
                 </button>
@@ -129,7 +129,7 @@ const promptUserForHref = () =>{
             <li>
                 <button @click="()=> editor.chain().focus().toggleHeading({level: 2}).run()"
                         title="Heading 1" type="button"
-                        class="px-3 py-2"
+                        class="px-3 py-2 min-w-12 border-r border-b"
                         :class="[ editor.isActive('heading', { level: 2}) ? 'bg-green-500 text-white' : 'hover:bg-green-200 ']">
                     <i class="ri-h-1"></i>
                 </button>
@@ -137,7 +137,7 @@ const promptUserForHref = () =>{
             <li>
                 <button @click="()=> editor.chain().focus().toggleHeading({level: 3}).run()"
                         title="Heading 2" type="button"
-                        class="px-3 py-2"
+                        class="px-3 py-2 min-w-12 border-r border-b"
                         :class="[ editor.isActive('heading', { level: 3}) ? 'bg-green-500 text-white' : 'hover:bg-green-200 ']">
                     <i class="ri-h-2"></i>
                 </button>
@@ -145,7 +145,7 @@ const promptUserForHref = () =>{
             <li>
                 <button @click="()=> editor.chain().focus().toggleHeading({level: 4}).run()"
                         title="Heading 3" type="button"
-                        class="px-3 py-2"
+                        class="px-3 py-2 min-w-12 border-r border-b"
                         :class="[ editor.isActive('heading', { level: 4}) ? 'bg-green-500 text-white' : 'hover:bg-green-200 ']">
                     <i class="ri-h-3"></i>
                 </button>
